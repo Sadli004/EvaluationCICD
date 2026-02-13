@@ -1,16 +1,19 @@
 name: Deploy to Local Machine
 on:
-  push:
-    branches: ["main"]
+  workflow_run:
+    workflows: ["Publication site"] # The name of your Pages workflow
+    types:
+      - completed
 
 jobs:
   local-deploy:
+    if: ${{github.event.workflow_run.conclusion == 'success'}}
     runs-on: [self-hosted, linux] # Add 'windows' if on Windows
     steps:
       - uses: actions/checkout@v3
       - name: Deploy Files
         run: |
           echo "Deploying to local machine..."
-          # Add your specific deployment commands here, e.g.:
-          # cp -r * /var/www/html/
+          cp -r * /var/www/html/
+          sudo systemctl reload nginx
           ls -la
