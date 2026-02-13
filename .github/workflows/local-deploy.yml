@@ -1,0 +1,16 @@
+name: Deploy to Local Machine
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  local-deploy:
+    runs-on: [self-hosted, linux] # Add 'windows' if on Windows
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy Files
+        run: |
+          echo "Deploying to local machine..."
+          # Add your specific deployment commands here, e.g.:
+          # cp -r * /var/www/html/
+          ls -la
