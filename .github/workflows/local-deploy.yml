@@ -7,13 +7,13 @@ on:
 
 jobs:
   local-deploy:
-    if: ${{github.event.workflow_run.conclusion == 'success'}}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: [self-hosted, linux] # Add 'windows' if on Windows
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Deploy Files
         run: |
           echo "Deploying to local machine..."
-          sudo cp -r * /var/www/html/
+          sudo cp -r . /var/www/html/
           sudo systemctl reload nginx
           ls -la
